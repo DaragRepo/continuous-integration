@@ -4,6 +4,7 @@ on: pull_request
 
 jobs:
   laravel-pint:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
