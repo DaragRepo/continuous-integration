@@ -16,7 +16,9 @@ jobs:
           tools: composer:v2
 
       - name: Install Dependencies
-        run: composer install -q --no-interaction
+        run: |
+          composer update -q --no-interaction
+          composer install -q --no-interaction
 
       - name: Prep Application
         run: |
