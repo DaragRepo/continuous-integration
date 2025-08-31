@@ -17,9 +17,7 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
 
       - name: Install Dependencies
-        run: |
-          composer update -q --no-interaction
-          composer install -q --no-interaction
+        run: composer install -q --no-interaction
 
       - name: Prep Application
         run: |
