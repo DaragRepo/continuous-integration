@@ -19,45 +19,18 @@ jobs:
           MYSQL_DATABASE: laravel  
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
 
+    env:
+      PHP_VERSION: '8.2'
+      CACHE_KEY: extension-cache-v1
+      PHP_EXTENSIONS: 'dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup cache environment
-        id: extcache
-        uses: shivammathur/cache-extensions@v1
-        with:
-          php-version: '8.2'
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-          key: extension-cache-v1
-
-      - name: Cache extensions
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.extcache.outputs.dir }}
-          key: ${{ steps.extcache.outputs.key }}
-          restore-keys: ${{ steps.extcache.outputs.key }}         
-        
-
-      - name: Setup PHP and Composer
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-          tools: composer:v2
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-
-      - name: Get Composer cache dir
-        id: composer-cache-dir
-        run: echo dir=$(composer config cache-files-dir) >> $GITHUB_OUTPUT
-
-      - name: Cache Dependencies
-        uses: actions/cache@v4.2.4
-        with:
-          key: composer-cache-${{ hashFiles('**/composer.lock') }}
-          path: ${{ steps.composer-cache-dir.outputs.dir }}
-          restore-keys: composer-cache-
-
-
+      - name: Setup
+        uses: ./.github/actions/setup
+  
       - name: Install Dependencies
         run: composer install -q --no-interaction
 
