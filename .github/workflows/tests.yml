@@ -19,17 +19,14 @@ jobs:
           MYSQL_DATABASE: laravel  
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
 
-    env:
-      PHP_VERSION: '8.2'
-      CACHE_KEY: extension-cache-v1
-      PHP_EXTENSIONS: 'dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite'
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          php-version: '8.2'
   
       - name: Install Dependencies
         run: composer install -q --no-interaction
