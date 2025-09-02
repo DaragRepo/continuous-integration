@@ -23,8 +23,8 @@ runs:
       id: extcache
       uses: shivammathur/cache-extensions@v1
       with:
-        php-version: ${{ input.PHP_VERSION }}
-        extensions: ${{ input.PHP_EXTENSIONS }}
+        php-version: ${{ inputs.PHP_VERSION }}
+        extensions: ${{ inputs.PHP_EXTENSIONS }}
         key: php-extensions-${{ steps.get-cache-hash.outputs.hash }}
 
     - name: Cache extensions
@@ -37,8 +37,8 @@ runs:
     - name: Setup PHP and Composer
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ input.PHP_VERSION }}
-        extensions: ${{ input.PHP_EXTENSIONS }}
+        php-version: ${{ inputs.PHP_VERSION }}
+        extensions: ${{ inputs.PHP_EXTENSIONS }}
         tools: composer:v2
 
     - name: Get Composer cache dir
